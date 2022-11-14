@@ -109,15 +109,15 @@ for i=1:length(DATA)
 end
 
 figure
-subplot(3,1,1)
+subplot(1,3,1)
 t = table(Neutral.Ch1, Neutral.Ch2, Neutral.Ch3, Neutral.Ch4, Neutral.Ch5, ...
     Neutral.Ch6, Neutral.Ch7, Neutral.Ch8);
 stackedplot(t)
-subplot(3,1,2)
+subplot(1,3,2)
 t = table(Flexion.Ch1, Flexion.Ch2, Flexion.Ch3, Flexion.Ch4, Flexion.Ch5, ...
     Flexion.Ch6, Flexion.Ch7, Flexion.Ch8);
 stackedplot(t)
-subplot(3,1,3)
+subplot(1,3,3)
 t = table(Extension.Ch1, Extension.Ch2, Extension.Ch3, Extension.Ch4, Extension.Ch5, ...
     Extension.Ch6, Extension.Ch7, Extension.Ch8);
 stackedplot(t)
