@@ -13,7 +13,7 @@ labels = [ ...
 
 Genders = ["Female" "Male"];
 dataScope1 = ["PreTrainingDataset" "EvaluationDataset"];
-   dataScope2 = ["\training0" "\Test0" "\Test1"];
+dataScope2 = ["\training0" "\Test0" "\Test1"];
 
 MaxSub = 15;
 nChannels = 8;
@@ -23,7 +23,7 @@ k=1;
 for idataScope1 = 1: length(dataScope1)
     path = "C:\Users\ncartocci\Documents\GitHub\MyoArmbandDataset\" + dataScope1(idataScope1);
 
- 
+
     for idataScope2 = 1: length(dataScope2)
 
         for iGender = 1:length(Genders)
