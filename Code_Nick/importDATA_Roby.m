@@ -9,7 +9,7 @@ labels = [ ...
 
 Gender = "Male";
 
-path = "C:\Users\ncartocci\Documents\GitHub\MyoArmbandDataset\Code_Nick\Roberto_data";
+path = "Roberto_data";
 
 Table_n = readtable(path + "\dm_log_2022-11-07_neutral.dat.csv");
 DATA_n = table2array(Table_n(:,2:9))';
