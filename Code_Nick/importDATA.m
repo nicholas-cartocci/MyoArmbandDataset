@@ -51,6 +51,7 @@ for idataScope1 = 1: length(dataScope1)
                     DATA{k,3} = Gender;
                     DATA{k,4} = iSub;
                     DATA{k,5} = data;
+
                     DATA{k,6} = iLabel-1;
                     DATA{k,7} = labels(iLabel);
 
@@ -61,3 +62,69 @@ for idataScope1 = 1: length(dataScope1)
         end
     end
 end
+
+%% Sequences selection in relation to the Gestures
+clearvars -except DATA
+
+DATA_Temp = {};
+for i=1:length(DATA)
+    gestureCode = DATA{i, 6}';
+    if sum(gestureCode == [0,2,4])
+        [r, ~]=size(DATA_Temp);
+        DATA_Temp(r+1,:)= DATA(i, :);
+
+        % Downsampling from 200Hz to 100Hz
+        DATA_Temp{r+1, 5} = downsample(DATA_Temp{r+1, 5}',2)';
+
+        lenSeq = length(DATA_Temp{r+1, 5});
+        DATA_Temp{r+1,6} = (DATA_Temp{r+1,6})*ones(1,lenSeq);
+        DATA_Temp{r+1,7}(1:lenSeq) = DATA_Temp{r+1,7};
+    end
+end
+
+DATA = DATA_Temp;
+
+%% Data Augmentation
+clearvars -except DATA
+
+Genders = ["Female" "Male"];
+MaxSub = 15;
+
+DATA_Temp = {};
+for iG = Genders
+    for iSub = 0:MaxSub
+        tempSamples = find(cellstr(DATA(:,3))==iG & cell2mat(DATA(:,4))==iSub);
+        for i = 1:length(tempSamples)-1
+            for j = i+1:length(tempSamples)
+                [r, ~]=size(DATA_Temp);
+                DATA_Temp(r+1,3:4) = DATA(tempSamples(i),3:4);
+                DATA_Temp{r+1,5} = [DATA{tempSamples(i),5} DATA{tempSamples(j),5}];
+                DATA_Temp{r+1,6} = [DATA{tempSamples(i),6} DATA{tempSamples(j),6}];
+                DATA_Temp{r+1,7} = [DATA{tempSamples(i),7} DATA{tempSamples(j),7}];
+            end
+        end
+    end
+end
+
+DATA = [DATA; DATA_Temp];
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
