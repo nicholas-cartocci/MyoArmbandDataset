@@ -106,7 +106,7 @@ Flag = 0;
 if Flag
 
     numFeatures = 8;
-    numHiddenUnits = 2^8;
+    numHiddenUnits = 2^7;
     numClasses = 3;
 
     layers = [ ...
@@ -118,7 +118,7 @@ if Flag
         softmaxLayer
         classificationLayer];
 
-    numEpochs = 2^4;
+    numEpochs = 2^7;
     miniBatchSize = 176;
 
     options = trainingOptions("adam", ...
@@ -136,7 +136,8 @@ if Flag
 
 else
 
-    load net
+%     load net
+load net_7epochs
 
 end
 
