@@ -8,10 +8,10 @@ persistent BUFFER
 persistent iBUFFER
 
 if isempty(BUFFER)
-   BUFFER = zeros(numChannels, sizeBUFFER);
+    BUFFER = zeros(numChannels, sizeBUFFER);
 end
 if isempty(iBUFFER)
-   iBUFFER = 1;
+    iBUFFER = 1;
 end
 
 if iBUFFER<sizeBUFFER+1
@@ -29,9 +29,9 @@ else
 
     signals = BUFFER';
     signals_Rect = abs(signals);
-%     signals_LP = lowpass(signals_Rect,fpass_LP,fs)';
-[b,a]=butter(4,fpass_LP/(fs/2));
-signals_LP=filter(b,a,signals_Rect)';
+    %     signals_LP = lowpass(signals_Rect,fpass_LP,fs)';
+    [b,a]=butter(4,fpass_LP/(fs/2));
+    signals_LP=filter(b,a,signals_Rect)';
 
     % Normalization
     Peaks_Roberto = [62.5341966817099,115.454332583449,114.153665342948,65.7814640082061,40.2525403778840,100.421821047113,79.0393829388866,71.4412803477133]';
