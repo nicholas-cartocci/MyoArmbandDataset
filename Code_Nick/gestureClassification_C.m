@@ -1,4 +1,4 @@
-function [YPred] = gestureClassification_C(DATA)
+function [Perc] = gestureClassification_C(DATA)
 
 numChannels = 8;
 sizeBUFFER = 40;
@@ -13,11 +13,14 @@ end
 if isempty(iBUFFER)
     iBUFFER = 1;
 end
+if isempty(net)
+    net = coder.loadDeepLearningNetwork('net_7epochs.mat');
+end
 
 if iBUFFER<sizeBUFFER+1
     BUFFER(:, iBUFFER) = DATA;
     iBUFFER = iBUFFER+1;
-    YPred = categorical(0);
+    [~, Perc] = classify(net, zeros(numChannels,1));
 else
     Temp = BUFFER(:,2:sizeBUFFER);
     BUFFER(:,1:sizeBUFFER-1) = Temp;
@@ -29,19 +32,16 @@ else
 
     signals = BUFFER';
     signals_Rect = abs(signals);
-    %     signals_LP = lowpass(signals_Rect,fpass_LP,fs)';
     [b,a]=butter(4,fpass_LP/(fs/2));
     signals_LP=filter(b,a,signals_Rect)';
 
     % Normalization
     Peaks_Roberto = [62.5341966817099,115.454332583449,114.153665342948,65.7814640082061,40.2525403778840,100.421821047113,79.0393829388866,71.4412803477133]';
-    signal_N = signals_LP(:,sizeBUFFER)/Peaks_Roberto;
+    signal_N = signals_LP(:,sizeBUFFER)./Peaks_Roberto;
 
-    % Stupid Analisys
-    if isempty(net)
-        net = coder.loadDeepLearningNetwork('net_7epochs.mat');
-    end
-    [net,YPred] = classifyAndUpdateState(net,signal_N);
+    % Classification
+    [net, ~, Perc] = classifyAndUpdateState(net,signal_N);
+
 end
 
 end
