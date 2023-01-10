@@ -121,7 +121,7 @@ Flag = 0;
 if Flag
 
     numFeatures = 8;
-    numHiddenUnits = 2^7;
+    numHiddenUnits = 2^8;
     numClasses = 4;
 
     layers = [ ...
